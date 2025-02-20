@@ -1,5 +1,5 @@
-import math
 import sys
+from collections import *
 
 input = sys.stdin.readline
 
@@ -11,26 +11,28 @@ for _ in range(m):
     r[b].append(a)
 
 
-def dfs(x, target, depth):
-    if x == target:
-        return depth
-    if len(r[x]) != 0:
-        for i in r[x]:
-            if not visited[x]:
-                visited[x] = 1
-                depth += 1
-                dfs(i, target, depth)
+def bfs(x, target, depth):
+    visited = [0] * (n + 1)
+    q = deque([(x, depth)])
+    visited[x] = 1
+    while q:
+        x, depth = q.popleft()
+        if x == target:
+            return depth
+        for nx in r[x]:
+            if not visited[nx]:
+                visited[nx] = 1
+                q.append((nx, depth + 1))
 
 
-min_kb = float("-inf")
+kb = [float("inf")] + []
 for i in range(1, n + 1):
     i_kb = 0
     for j in range(1, n + 1):
         if i != j:
-            visited = [0] * (n + 1)
-            i_kb += dfs(i, j)
-    min_kb = min(min_kb, i_kb)
-
+            i_kb += bfs(i, j, 0)
+    kb.append(i_kb)
+print(kb.index(min(kb)))
 
 """
 5 5
