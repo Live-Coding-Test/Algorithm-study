@@ -4,7 +4,7 @@ on:
   schedule:
     - cron: '00 12 * * 1' # 월요일 21시 00분 KST (UTC 12:00)
     - cron: '00 10 * * 4' # 목요일 19시 00분 KST (UTC 10:00)
-    - cron: '01 0 * * 5' # 금요일 9시 01분 KST (UTC 0:01)
+    - cron: '59 23 * * 4' # 금요일 8시 59분 KST (UTC 23:59)
 
 jobs:
   merge-prs-and-create-folders:
