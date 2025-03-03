@@ -1,12 +1,22 @@
-import re
-
-
 def solution(files):
     answer = []
-    names = []
+    head, number, tail = '', '', ''
 
     for file in files:
-        names.append(re.split(r'(\d+)', file))  # 정규식 참고
-    # 	[['F-', '5', ' Freedom Fighter'], ['B-', '50', ' Superfortress'], ['A-', '10', ' Thunderbolt II'], ['F-', '14', ' Tomcat']]
+        for i in range(len(file)):
+            if file[i].isdigit():
+                head = file[:i]
+                number = file[i:]
+                for j in range(len(number)):
+                    if not number[j].isdigit():
+                        tail = number[j:]
+                        number = number[:j]
+                        break
 
-    return answer
+                answer.append([head, number, tail])
+                head, number, tail = '', '', ''
+                break
+
+    answer = sorted(answer, key=lambda x: (x[0].lower(), int(x[1])))
+
+    return [''.join(i) for i in answer]
