@@ -16,7 +16,13 @@ function solution(input) {
   while (low <= high) {
     const mid = Math.floor((low + high) / 2);
     const sum = 지방예산요청.reduce((acc, v) => acc + (v <= mid ? v : mid), 0);
+    if (sum > M) {
+      high = mid - 1;
+    } else {
+      low = mid + 1;
+    }
   }
+  return high;
 }
 
 console.log(solution(input));
