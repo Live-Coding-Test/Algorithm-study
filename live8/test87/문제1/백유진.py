@@ -1,12 +1,13 @@
 def solution(numbers):
-    answer = []
+    n = len(numbers)
+    answer = [-1] * n
+    stack = []
     
-    for i in range(len(numbers)):
-        for j in range(i+1, len(numbers)):
-            if numbers[j] > numbers[i]:
-                answer.append(numbers[j])
-                break
-        if len(answer) != i+1:
-            answer.append(-1)
-            
+    for i in range(n):
+        while stack and numbers[stack[-1]] < numbers[i]:
+            index = stack.pop()
+            answer[index] = numbers[i]
+        
+        stack.append(i)
+    
     return answer
