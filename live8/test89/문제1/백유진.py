@@ -1,24 +1,23 @@
-n, m = map(int, input().split())
-arr = list(map(int, input().split()))
+n = int(input())
 
-answer = 0
+arr = []
+
+for i in range(n):
+  arr.append(int(input()))
+
+arr.sort()
 
 start = 0
 end = 0
 
-cum_sum = arr[start]
+max = float("-inf")
 
-while end < len(arr):
-  if cum_sum == m:
-    answer += 1
-    cum_sum -= arr[start]
+while end < n:
+  if arr[end] - arr[start] > 4:
     start += 1
-  elif cum_sum < m:
-    end += 1
-    if end < len(arr):
-      cum_sum += arr[end]
   else:
-    cum_sum -= arr[start]
-    start += 1
+    if end - start + 1 > max:
+      max = end - start + 1
+    end += 1
 
-print(answer)
+print(5-max)
