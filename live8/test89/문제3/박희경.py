@@ -1,13 +1,8 @@
 def solution(numbers):
-    answer = float('-inf')
+    numbers_str = list(map(str, numbers))
 
-    numbers_copy = numbers.copy()
-    numbers_copy = sorted(map(str, numbers_copy), reverse=True)
-    print(numbers_copy)
+    # numbers의 원소는 1,000 이하이므로 3번 반복
+    numbers_str = sorted(numbers_str, key=lambda x: x * 3, reverse=True)
 
-    # 시간 초과
-    # for perm in permutations(numbers, len(numbers)):
-    #     num = ''.join(map(str, perm))
-    #     answer = max(answer, int(num))
-
-    return ''.join(numbers_copy)
+    # numbers = [0, 0, 0] 라면 -> '000' 반환
+    return str(int(''.join(numbers_str)))
