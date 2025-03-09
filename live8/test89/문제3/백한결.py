@@ -1,13 +1,8 @@
 def solution(numbers):
-    answer = ""
-    str_array = []
-    cal_array = []
+    str_array = list(map(str, numbers))
 
-    for i in numbers:
-        str_array.append(str(i))
+    sorted_array = sorted(str_array, key=lambda x: x * 3, reverse=True)
 
-    for i in range(len(str_array)):
-        for j in range(i + 1, len(str_array)):
-            cal_array.append(str_array[i] + str_array[j])
+    answer = ''.join(sorted_array)
 
-    return answer
+    return '0' if answer[0] == '0' else answer
