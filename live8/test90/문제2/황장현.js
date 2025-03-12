@@ -8,23 +8,21 @@ const input = require('fs')
 function solution(input) {
   const [N, M] = input[0];
 
-  const temp = new Set();
   const result = [];
   function test(start, store) {
     if (store.length === M) {
-      result.push(store);
-      temp.add(store.sort((a, b) => a - b));
+      result.push(store.join(' '));
       return;
     }
-    if (temp.has(store.sort((a, b) => a - b))) {
-      return;
-    }
+
     for (let i = start; i <= N; i++) {
-      test(i, [...store, i]);
+      test(i + 1, [...store, i]);
     }
   }
 
   test(1, []);
+
+  return result.join('\n');
 }
 
 console.log(solution(input));
