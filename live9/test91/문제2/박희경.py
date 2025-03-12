@@ -1,22 +1,16 @@
 import sys
+from itertools import *
 
 input = sys.stdin.readline
 
 n = int(input())
 a = list(map(int, input().split()))
 
-a.sort()    
-reverse_a = sorted(a, reverse=True)
+ans = float('-inf')
+for perm in permutations(a, n):
+    total = 0
+    for i in range(n-1):
+        total += abs(perm[i] - perm[i+1])
+    ans = max(ans, total)
 
-arr = []
-for i in range(n):
-    arr.append(a[i])
-    arr.append(reverse_a[i])
-    # 이미 존재한다면 반복문 끝
-
-print(arr)
-
-"""
-6
-20 1 15 8 4 10
-"""
+print(ans)
