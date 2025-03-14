@@ -1,29 +1,20 @@
 import heapq
 
 def solution(book_time):
-    answer = 0
-    # book_time.sort()
-    
-    def change_minute(time):
+
+    def hour_to_minute(time):
         h, m = map(int, time.split(":"))
         return h * 60 + m
     
-    heap = list([change_minute(start), change_minute(end) + 10] for start, end in book_time)
-    # 	[[850, 1160], [860, 920], [900, 1020], [1000, 1100], [1100, 1280]]
+    book = sorted(list([hour_to_minute(start), hour_to_minute(end) + 10] for start, end in book_time))
     
-    heapq.heapify(heap)
-    print(heap)
+    room = []
+    for start, end in book:
+        #  현재 예약 시작 시간보다 가장 빨리 퇴실 시간 + 10분보다 이후라면 예약 가능 (갱신)
+        if room and start >= room[0]:   
+            heapq.heappop(room)
     
-    while heap:
-        start, end = heap[0]
-        print(heap)
-        next_start, next_end = heapq.heappop(heap)
-        if start <= next_start <= end:
-            answer += 1
-            start = next_start
-            end = next_end
-        else: 
-            break
+        # 현재 예약 종료 시간을 힙에 추가 (새로운 방 사용)
+        heapq.heappush(room, end)
         
-    
-    return answer
+    return len(room)
