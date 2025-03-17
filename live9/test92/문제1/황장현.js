@@ -37,9 +37,6 @@ class MinHeap {
     while (true) {
       const left = 2 * index + 1;
       const right = 2 * index + 2;
-
-      let min = Math.min(this.heap[left], this.heap[right]);
-      [this.heap[index], min] = [min, this.heap[index]];
       let smallest = index;
 
       if (left < length && this.heap[left] < this.heap[smallest]) {
@@ -56,6 +53,7 @@ class MinHeap {
         this.heap[smallest],
         this.heap[index],
       ];
+
       index = smallest;
     }
   }
@@ -63,10 +61,10 @@ class MinHeap {
   least() {
     return this.heap[0];
   }
-}
 
-function calculateScovile(num1, num2) {
-  return num1 + num2 * 2;
+  size() {
+    return this.heap.length;
+  }
 }
 
 function solution(scoville, K) {
@@ -75,6 +73,16 @@ function solution(scoville, K) {
 
   const minHeap = new MinHeap();
   scoville.forEach((s) => minHeap.push(s));
+  let mixCount = 0;
+  while (minHeap.size() > 1 && minHeap.least() < K) {
+    const first = minHeap.pop();
+    const second = minHeap.pop();
+    const newScoville = first + second * 2;
+    minHeap.push(newScoville);
+    mixCount++;
+  }
+
+  return minHeap.least() >= K ? mixCount : -1;
 }
 
 console.log(solution([1, 2, 3, 9, 10, 12], 7));
