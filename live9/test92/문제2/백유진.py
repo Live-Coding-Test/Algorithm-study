@@ -1,30 +1,32 @@
 def solution(board, skill):
-    answer = len(board)*len(board[0])
+    n = len(board)
+    m = len(board[0])
     
-    # broken = set()
+    acc = [[0] * (m + 1) for _ in range(n + 1)]
     
-    for s in skill:
-        stype, r1, c1, r2, c2, degree = s
-        for r in range(r1, r2+1):
-            for c in range(c1, c2+1):
-                check = False
-                if stype == 1:
-                    if board[r][c] <= 0:
-                        check = True
-                    board[r][c] -= degree
-                    if board[r][c] <= 0:
-                        if not check:
-                            answer -= 1
-                elif stype == 2:
-                    if board[r][c] <= 0:
-                        check = True
-                    board[r][c] += degree
-                    if board[r][c] > 0:
-                        if check:
-                            answer += 1
-    # for i in range(len(board)):
-    #     for j in range(len(board[0])):
-    #         if board[i][j] > 0:
-    #             answer += 1
-    # print(len(board)*len(board[0])-len(broken))
+    # skill 명령 누적합 배열에 기록 
+    for t, r1, c1, r2, c2, degree in skill:
+        diff = degree if t == 2 else -degree
+        acc[r1][c1] += diff
+        acc[r1][c2 + 1] -= diff
+        acc[r2 + 1][c1] -= diff
+        acc[r2 + 1][c2 + 1] += diff
+    
+    # 가로 누적합
+    for i in range(n):
+        for j in range(1, m):
+            acc[i][j] += acc[i][j - 1]
+    
+    # 세로 누적합
+    for j in range(m):
+        for i in range(1, n):
+            acc[i][j] += acc[i - 1][j]
+    
+    answer = 0
+    for i in range(n):
+        for j in range(m):
+            board[i][j] += acc[i][j]
+            if board[i][j] > 0:
+                answer += 1
+    
     return answer
