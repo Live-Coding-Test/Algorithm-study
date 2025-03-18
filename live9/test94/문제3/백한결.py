@@ -1,6 +1,6 @@
 def solution(stones, k):
-    start = 0
-    end = len(stones) - 1
+    start = 1
+    end = max(stones)
     max_friends = 0
 
     while start <= end:
@@ -20,7 +20,7 @@ def checkUnderZero(stones, k, friends):
     count = 0
 
     for stone in stones:
-        if stone - friends <= 0:
+        if stone - friends < 0:
             count += 1
         else:
             count = 0
@@ -29,6 +29,3 @@ def checkUnderZero(stones, k, friends):
             return False
 
     return True
-
-
-print(checkUnderZero([2, 4, 5, 3, 2, 1, 4, 2, 5, 1], 3, 2))
