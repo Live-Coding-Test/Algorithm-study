@@ -1,42 +1,24 @@
-const alphabetValues = {
-  B: 1,
-  C: 2,
-  D: 3,
-  E: 4,
-  F: 5,
-  G: 6,
-  H: 7,
-  I: 8,
-  J: 9,
-  K: 10,
-  L: 11,
-  M: 13,
-  N: 12,
-  O: 12,
-  P: 11,
-  Q: 10,
-  R: 9,
-  S: 8,
-  T: 7,
-  U: 6,
-  V: 5,
-  W: 4,
-  X: 3,
-  Y: 2,
-  Z: 1,
-};
-
 function solution(name) {
-  let answer = 0;
+  let moveCount = 0;
+  let minMove = name.length - 1;
+
   for (let i = 0; i < name.length; i++) {
-    if (name[i] === 'A') {
-      answer += -1;
-    } else {
-      answer += alphabetValues[name[i]];
+    const char = name[i];
+    moveCount += Math.min(char.charCodeAt(0) - 65, 91 - char.charCodeAt(0));
+
+    let nextIdx = i + 1;
+    while (nextIdx < name.length && name[nextIdx] === 'A') {
+      nextIdx++;
     }
+
+    minMove = Math.min(
+      minMove,
+      i * 2 + (name.length - nextIdx),
+      i + 2 * (name.length - nextIdx)
+    );
   }
-  answer += name.length;
-  return answer;
+
+  return moveCount + minMove;
 }
 
 // console.log(solution('JEROEN'));
