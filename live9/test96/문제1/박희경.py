@@ -1,8 +1,6 @@
 from collections import *
 
 def solution(board):
-    answer = 0
-    
     # 상하좌우
     dx = [0, 0, -1, 1]
     dy = [1, -1, 0, 0]
@@ -19,7 +17,7 @@ def solution(board):
             x, y, move = q.popleft()
             if board[x][y] == 'G':
                 return move
-            # 'D' 만날 때까지 이동 (이 부분 참고)
+            # 'D' 만날 때까지 이동
             for i in range(4):
                 nx, ny = x, y
                 while 0 <= nx + dx[i] < n and 0 <= ny + dy[i] < m and board[nx + dx[i]][ny + dy[i]] != 'D':
@@ -35,6 +33,3 @@ def solution(board):
         for j in range(m):
             if board[i][j] == 'R':
                 return bfs(i, j, 0)
-
-    
-    return answer
