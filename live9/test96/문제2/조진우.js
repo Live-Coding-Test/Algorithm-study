@@ -5,17 +5,16 @@ function solution(n) {
     let sum = 0;
     let i = startNum;
     while (true) {
-      sum = sum + i;
+      if (sum > n) break;
+
       if (sum === n) {
         ways++;
         break;
       }
-      if (sum > n) break;
+      sum = sum + i;
       i++;
     }
     startNum++;
   }
   return ways;
 }
-
-console.log(solution(15));
