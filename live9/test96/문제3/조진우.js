@@ -1,14 +1,18 @@
 function solution(elements) {
-  var answer = 0;
-  for (let i = 1; i <= elements.length; i++) {
-    for (let j = 0; j < elements.length; j++) {
-      const subArr = [];
+  const n = elements.length;
+  const sums = new Set();
+
+  for (let i = 1; i <= n; i++) {
+    for (let j = 0; j < n; j++) {
+      let sum = 0;
       for (let k = 0; k < i; k++) {
-        subArr.push(elements[(j + k) % n]);
+        sum += elements[(j + k) % n];
       }
+      sums.add(sum);
     }
   }
-  return answer;
+
+  return sums.size;
 }
 
 console.log(solution([7, 9, 1, 1, 4]));
