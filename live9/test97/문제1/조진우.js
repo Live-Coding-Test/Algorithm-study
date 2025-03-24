@@ -1,23 +1,38 @@
 function solution(board, skill) {
-  let currentBoard = board;
+  const row = board.length;
+  const col = board[0].length;
+  const sumBoard = Array.from({ length: row + 1 }, () =>
+    Array(col + 1).fill(0)
+  );
 
   for (let i = 0; i < skill.length; i++) {
-    for (let j = skill[i][1]; j <= skill[i][3]; j++) {
-      for (let k = skill[i][2]; k <= skill[i][4]; k++) {
-        if (skill[i][0] === 1) {
-          currentBoard[j][k] -= skill[i][5];
-        }
-        if (skill[i][0] === 2) {
-          currentBoard[j][k] += skill[i][5];
-        }
-      }
+    const [type, r1, c1, r2, c2, degree] = skill[i];
+    const value = type === 1 ? -degree : degree;
+
+    sumBoard[r1][c1] += value;
+    sumBoard[r1][c2 + 1] -= value;
+    sumBoard[r2 + 1][c1] -= value;
+    sumBoard[r2 + 1][c2 + 1] += value;
+  }
+
+  // 가로 누적합
+  for (let i = 0; i <= row; i++) {
+    for (let j = 1; j <= col; j++) {
+      sumBoard[i][j] += sumBoard[i][j - 1];
+    }
+  }
+
+  // 세로 누적합
+  for (let j = 0; j <= col; j++) {
+    for (let i = 1; i <= row; i++) {
+      sumBoard[i][j] += sumBoard[i - 1][j];
     }
   }
 
   let count = 0;
-  for (let j = 0; j < board.length; j++) {
-    for (let k = 0; k < board[0].length; k++) {
-      if (currentBoard[j][k] > 0) count++;
+  for (let i = 0; i < row; i++) {
+    for (let j = 0; j < col; j++) {
+      if (board[i][j] + sumBoard[i][j] > 0) count++;
     }
   }
 
