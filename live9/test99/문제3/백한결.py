@@ -7,7 +7,7 @@ def solution(s):
         stack = []
         rotated = s[i:] + s[:i]
 
-        print(rotated)
+        isPerfect = False
 
         for j in rotated:
             if j == "(" or j == "[" or j == "{":
@@ -17,9 +17,18 @@ def solution(s):
                 if stack:
                     total = stack[-1] + j
 
-                    if total == "()" or total == "[]" or total == "{}":
-                        count += 1
+                    if total in rightGaulHoList:
+                        stack.pop()
+                        isPerfect = True
+                    else:
+                        isPerfect = False
+                        break
+
                 else:
+                    isPerfect = False
                     break
+
+        if isPerfect and not stack:
+            count += 1
 
     return count
