@@ -1,15 +1,31 @@
 from collections import *
 
+def is_correct(arr):
+    stack = []
+    for a in arr:
+        if a in '([{':
+            stack.append(a)
+        elif a == ')':
+            if not stack or stack[-1] != '(':
+                return False
+            stack.pop()
+        elif a == ']':
+            if not stack or stack[-1] != '[':
+                return False
+            stack.pop()
+        elif a == '}':
+            if not stack or stack[-1] != '{':
+                return False
+            stack.pop()
+
+    return not stack
+
 def solution(s):
-    answer = -1
+    answer = 0
     queue = deque(s)
     
-    for i in range(len(s)):
-        queue.rotate(i)
-    
-    def correct(arr):
-        st = []
-        for a in arr:
-            first = st[-1]
-            
+    for _ in range(len(queue)):
+        if is_correct(queue):
+            answer += 1
+        queue.rotate(-1)     
     return answer
