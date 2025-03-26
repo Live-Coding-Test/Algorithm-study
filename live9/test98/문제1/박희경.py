@@ -3,25 +3,23 @@ import sys
 input = sys.stdin.readline
 
 n, m = map(int, input().split())
-a = list(map(int, input().split()))
+a = [1] + list(map(int, input().split()))
 
-i = 1
-dp = [0] * (n + 1)
-dp[0] = 1
+def snow(size, time, idx):
+    global res
 
-while m > 0 or i <= n:
-    # print(i, m, dp)
-    if dp[i-1] + a[i+1] > dp[i-1]//2 + a[i+2]:
-        dp[i] = dp[i-1] + a[i+1]
-        print("굴리기", dp)
-        i += 1
-    else:
-        dp[i] =  dp[i-1]//2 + a[i+2]
-        print("던지기", dp)
-        i += 2
-    m -= 1
+    if time > m:
+        return
+    if time <= m:
+        res = max(res, size)
+    if idx + 1 <= n:
+        snow(size + a[idx + 1], time + 1, idx + 1)
+    if idx + 2 <= n:
+        snow(size // 2 + a[idx + 2], time + 1, idx + 2)
 
-print(dp)
+res = 0
+snow(1, 0, 0)
+print(res)
 
 """
 10 5
