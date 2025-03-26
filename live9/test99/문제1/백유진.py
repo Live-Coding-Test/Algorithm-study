@@ -32,6 +32,5 @@ def dfs(start_index, start_val, plus, minus, mul, div):
   return max_result, min_result
 
 max_val, min_val = dfs(1, arr[0], *op)
-
 print(max_val)
 print(min_val)
