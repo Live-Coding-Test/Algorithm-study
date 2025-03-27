@@ -1,7 +1,7 @@
 const fs = require("fs");
 const input = fs
-  .readFileSync("./input.txt", "utf8")
-  // .readFileSync("/dev/stdin", "utf8")
+  // .readFileSync("./input.txt", "utf8")
+  .readFileSync("/dev/stdin", "utf8")
   .toString()
   .trim()
   .split("\n")
@@ -11,8 +11,8 @@ function solution(input) {
   const t = input[0][0];
   const arr = input[1];
 
-  let max = 0;
-  let min = 0;
+  let max = -Infinity;
+  let min = Infinity;
 
   const dfs = (index, value, [plus, minus, multiply, divide]) => {
     if (index === t) {
