@@ -3,38 +3,40 @@ const input = +require('fs')
   .toString()
   .trim();
 
-function solution(input) {
-  const N = input;
+function solution(N) {
   let count = 0;
+  const column = Array(N).fill(false);
+  const diagonal1 = Array(2 * N - 1).fill(false);
+  const diagonal2 = Array(2 * N - 1).fill(false);
 
-  function backTrack(y, x, idx, map) {
-    if (idx === N) {
+  function backTrack(row) {
+    if (row === N) {
       count++;
       return;
     }
 
-    for (let i = 0; i < N; i++) {
-      map[y][i] = 1;
-      map[i][x] = 1;
-      if (y + i < N && x + i < N) map[y + i][x + i] = 1;
-      if (y - i >= 0 && x - i >= 0) map[y - i][x - i] = 1;
-      if (y + i < N && x - i >= 0) map[y + i][x - i] = 1;
-      if (y - i >= 0 && x + i < N) map[y - i][x + i] = 1;
-    }
+    for (let col = 0; col < N; col++) {
+      if (
+        column[col] ||
+        diagonal1[row + col] ||
+        diagonal2[row - col + (N - 1)]
+      ) {
+        continue;
+      }
 
-    for (let i = 0; i < N; i++) {
-      const nextY = y + 1;
-      if (nextY < N && map[nextY][i] === 0) backTrack(nextY, i, idx + 1, map);
-      else break;
+      column[col] = true;
+      diagonal1[row + col] = true;
+      diagonal2[row - col + (N - 1)] = true;
+
+      backTrack(row + 1);
+
+      column[col] = false;
+      diagonal1[row + col] = false;
+      diagonal2[row - col + (N - 1)] = false;
     }
   }
 
-  for (let i = 0; i < N; i++) {
-    for (let j = 0; j < N; j++) {
-      const chessMap = Array.from({ length: N }, () => Array(N).fill(0));
-      backTrack(i, j, 1, chessMap);
-    }
-  }
+  backTrack(0);
   return count;
 }
 
