@@ -16,34 +16,19 @@ const input = fs
 function solution(input) {
   const N = input[0][0];
   const costs = input.slice(1);
-  const result = [];
+  const dp = [...costs[0]];
 
-  function dfs(index, color) {
-    if (index === 0) return costs[0][color];
-
-    let minCost = Infinity;
-
-    for (let i = 0; i < 3; i++) {
-      if (i !== color) {
-        const cost = dfs(index - 1, i) + costs[index][color];
-        if (cost < minCost) minCost = cost;
-      }
+  for (let i = 1; i < N; i++) {
+    const temp = [0, 0, 0];
+    for (let j = 0; j < 3; j++) {
+      if (j === 0) temp[0] = costs[i][0] + Math.min(dp[1], dp[2]);
+      else if (j === 1) temp[1] = costs[i][1] + Math.min(dp[0], dp[2]);
+      else if (j === 2) temp[2] = costs[i][2] + Math.min(dp[0], dp[1]);
     }
-
-    return minCost;
+    dp.splice(0, 3, ...temp);
   }
 
-  const lastHouse = N - 1;
-
-  const minTotal = Math.min(
-    dfs(lastHouse, 0),
-    dfs(lastHouse, 1),
-    dfs(lastHouse, 2)
-  );
-
-  result.push(minTotal);
-
-  return result;
+  return Math.min(...dp);
 }
 
-console.log(solution(input).join("\n"));
+console.log(solution(input));
