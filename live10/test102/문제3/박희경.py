@@ -1,20 +1,16 @@
 from collections import *
 
 def solution(x, y, n):
-    answer = 0
-    result = []
+    visited = set([x])
 
-    q = deque([x])
+    q = deque([(0, x)])
     while q:
-        x = q.popleft()
-        calculate = [x + n, x * 2, x * 3]
-        cnt = 0
-        for i in range(3):
-            cnt += 1
-            nx = calculate[i]
-            if nx == y:
-                return cnt
-            else:
-                q.append(nx)
-
-    return answer
+        cnt, x = q.popleft()
+        if x == y:
+            return cnt
+        for nx in (x + n, x * 2, x * 3):
+            if nx <= y and nx not in visited:
+                visited.add(nx)
+                q.append((cnt + 1, nx))
+            
+    return -1
