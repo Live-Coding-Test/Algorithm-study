@@ -7,3 +7,5 @@ function solution(n) {
   }
   return dp[n];
 }
+
+// for test
