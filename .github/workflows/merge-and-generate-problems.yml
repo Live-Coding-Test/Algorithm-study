@@ -69,6 +69,9 @@ jobs:
 
           LIVE_GROUP=$(((NEXT_TEST - 1) / 10))
 
+          echo "NEXT_TEST=test$NEXT_TEST"
+          echo "LIVE_FOLDER=live$LIVE_GROUP"
+
           echo "NEXT_TEST=test$NEXT_TEST" >> $GITHUB_ENV
           echo "LIVE_FOLDER=live$LIVE_GROUP" >> $GITHUB_ENV
 
@@ -79,6 +82,7 @@ jobs:
           touch $LIVE_FOLDER/$NEXT_TEST/문제1/.gitkeep
           touch $LIVE_FOLDER/$NEXT_TEST/문제2/.gitkeep
           touch $LIVE_FOLDER/$NEXT_TEST/문제3/.gitkeep
+          echo "✅ Created folder: $LIVE_FOLDER/$NEXT_TEST"
 
       - name: Commit and Push Changes
         if: env.pr_found == 'true'
