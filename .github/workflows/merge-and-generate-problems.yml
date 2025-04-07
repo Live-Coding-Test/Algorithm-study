@@ -54,15 +54,15 @@ jobs:
               }
             done
 
-            echo "pr_found=true" >> $GITHUB_ENV
+            # echo "pr_found=true" >> $GITHUB_ENV
           else
             echo "No open PRs to merge."
-            echo "pr_found=false" >> $GITHUB_ENV
+            # echo "pr_found=false" >> $GITHUB_ENV
           fi
 
       - name: Determine Next Test Folder
         id: determine-folder
-        if: env.pr_found == 'true'
+        # if: env.pr_found == 'true'
         run: |
           LATEST_TEST=$(find live* -type d -name 'test[0-9]*' 2>/dev/null | sort -V | tail -n 1 | grep -o '[0-9]*$' || echo "0")
 
@@ -77,7 +77,7 @@ jobs:
           echo "LIVE_FOLDER=live$LIVE_GROUP" >> $GITHUB_ENV
 
       - name: Create Next Test Folder
-        if: env.pr_found == 'true'
+        # if: env.pr_found == 'true'
         run: |
           mkdir -p $LIVE_FOLDER/$NEXT_TEST/{문제1,문제2,문제3}
           touch $LIVE_FOLDER/$NEXT_TEST/문제1/.gitkeep
@@ -86,7 +86,7 @@ jobs:
           echo "✅ Created folder: $LIVE_FOLDER/$NEXT_TEST"
 
       - name: Commit and Push Changes
-        if: env.pr_found == 'true'
+        # if: env.pr_found == 'true'
         run: |
           git config --global user.name "GenerateBot"
           git config --global user.email "generateBot@github.com"
