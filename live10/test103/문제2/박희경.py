@@ -27,20 +27,18 @@ input = sys.stdin.readline
 
 n = int(input())
 
-res = 0
 dp = [-1] * 50001
 dp[3] = 1
-dp[4] = -1
 dp[5] = 1
 dp[6] = 2
-dp[7] = -1
 
 for i in range(8, n + 1):
-    if (i - 5) % 5 == 0:
-        dp[i] = dp[i - 5] + dp[5]
-    elif (i - 3) % 3 == 0:
-        dp[i] = dp[i-3] + dp[3]
-    else:
-        dp[i] = -1
+    if dp[i - 3] != -1:
+        dp[i] = dp[i - 3] + 1
+    if dp[i - 5] != -1:
+        dp[i] = dp[i - 5] + 1
+    # 3, 5kg로 나눌 수 있다면
+    if dp[i - 3] > 0 and dp[i - 5] > 0:
+        dp[i] = min(dp[i - 3], dp[i - 5]) + 1
 
 print(dp[n])
