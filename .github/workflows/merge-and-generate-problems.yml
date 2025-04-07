@@ -35,6 +35,12 @@ jobs:
       - name: Merge All Open PRs
         id: merge-prs
         run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "Manual trigger detected. Forcing pr_found=true"
+            echo "pr_found=true" >> $GITHUB_ENV
+            exit 0
+          fi
+
           PR_LIST=$(gh pr list --state open --json number -q '.[].number')
 
           if [ -n "$PR_LIST" ]; then
