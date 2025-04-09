@@ -1,16 +1,20 @@
+from collections import *
+
 def solution(begin, target, words):
-    answer = 0
     
     if target not in words:
         return 0
     
-    alpha = []
-    for word in words:
-        alpha.append(list(map(str, word.rstrip())))
+    q = deque([(begin, 0)])
+    while q:
+        now, cnt = q.popleft()
+        if now == target:
+            return cnt
         
-    def dfs(word, target):
-        word = list(map(str, word.rstrip()))
-        
-        
-    
-    return answer
+        for word in words:
+            tmp_cnt = 0
+            for i in range(len(now)): 
+                if now[i] != word[i]:
+                    tmp_cnt += 1
+            if tmp_cnt == 1: 
+                q.append([word, cnt + 1])
