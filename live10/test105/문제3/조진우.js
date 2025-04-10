@@ -1,33 +1,35 @@
 function solution(order) {
-  const containerBelt = [];
-  let now = 1;
+  let box = 1;
   let count = 0;
+  let tempBox = [];
+  let i = 0;
 
-  for (let i = 0; i < order.length; i++) {
-    const target = order[i];
-
-    console.log(target);
-
-    while (now <= order.length && now !== target) {
-      containerBelt.push(now);
-      now++;
+  while (box <= order.length) {
+    if (order[i] === box) {
+      count++;
+      i++;
+      box++;
+    } else if (tempBox.length > 0 && tempBox[tempBox.length - 1] === order[i]) {
+      tempBox.pop();
+      count++;
+      i++;
+    } else {
+      tempBox.push(box);
+      box++;
     }
-    console.log("belt:", containerBelt);
+  }
 
-    if (now === target) {
+  while (tempBox.length > 0) {
+    if (tempBox[tempBox.length - 1] === order[i]) {
+      tempBox.pop();
       count++;
-      now++;
-    } else if (containerBelt.length && containerBelt[0] === target) {
-      containerBelt.shift();
-      count++;
+      i++;
     } else {
       break;
     }
-
-    console.log("--------------");
   }
 
   return count;
 }
 
-console.log(solution([4, 3, 1, 2, 5])); // 출력: 2
+console.log(solution([4, 3, 1, 2, 5]));
