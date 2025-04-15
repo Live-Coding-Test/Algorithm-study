@@ -1,7 +1,9 @@
 from collections import defaultdict
 import heapq
+import sys
 
 def main():
+    input = sys.stdin.readline
     V, E = map(int, input().strip().split())
 
     K = int(input())
@@ -12,8 +14,8 @@ def main():
         u, v, w = map(int, input().strip().split())
         graph[u].append((v, w))
 
-    dist = [float('inf') for _ in range(V)]
-    dist[K-1] = 0
+    dist = [float('inf')] * (V + 1)
+    dist[K] = 0
 
     pq = []
     heapq.heappush(pq, (0, K))
@@ -21,20 +23,21 @@ def main():
     while pq:
         cost, now = heapq.heappop(pq)
 
-        if dist[now-1] < cost:
+        if dist[now] < cost:
             continue
 
         for next, weight in graph[now]:
             newCost = cost + weight
-            if newCost < dist[next-1]:
-                dist[next-1] = newCost
+            if newCost < dist[next]:
+                dist[next] = newCost
                 heapq.heappush(pq, (newCost, next))
 
-    for d in dist:
-        if d == float('inf'):
+    for i in range(1, V + 1):
+        if dist[i] == float('inf'):
             print('INF')
         else:
-            print(d)
+            print(dist[i])
+
 
 if __name__ == "__main__":
     main()
