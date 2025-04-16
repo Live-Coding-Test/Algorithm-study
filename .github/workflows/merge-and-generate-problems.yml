@@ -85,10 +85,9 @@ jobs:
       - name: Create Next Test Folder
         if: env.pr_found == 'true'
         run: |
-          mkdir -p $LIVE_FOLDER/$NEXT_TEST/{문제1,문제2,문제3}
+          mkdir -p $LIVE_FOLDER/$NEXT_TEST/{문제1,문제2}
           touch $LIVE_FOLDER/$NEXT_TEST/문제1/.gitkeep
           touch $LIVE_FOLDER/$NEXT_TEST/문제2/.gitkeep
-          touch $LIVE_FOLDER/$NEXT_TEST/문제3/.gitkeep
           echo "✅ Created folder: $LIVE_FOLDER/$NEXT_TEST"
 
       - name: Commit and Push Changes
