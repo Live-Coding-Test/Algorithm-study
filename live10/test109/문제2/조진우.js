@@ -5,21 +5,41 @@ const input = require("fs")
       : require("path").join(__dirname, "input.txt"),
     "utf8"
   )
-  .toString()
   .trim()
   .split("\n");
 
+function lowerBound(arr, target) {
+  let left = 0,
+    right = arr.length;
+  while (left < right) {
+    const mid = Math.floor((left + right) / 2);
+    if (arr[mid] >= target) right = mid;
+    else left = mid + 1;
+  }
+  return left;
+}
+
+function upperBound(arr, target) {
+  let left = 0,
+    right = arr.length;
+  while (left < right) {
+    const mid = Math.floor((left + right) / 2);
+    if (arr[mid] > target) right = mid;
+    else left = mid + 1;
+  }
+  return left;
+}
+
 function solution(input) {
-  const [N, M] = input[0].split(" ").map(Number);
-  const dots = input[1].split(" ").map(Number);
+  const dots = input[1]
+    .split(" ")
+    .map(Number)
+    .sort((a, b) => a - b);
   const lines = input.slice(2).map((line) => line.split(" ").map(Number));
   const result = [];
 
   for (let [a, b] of lines) {
-    let count = 0;
-    for (let x of dots) {
-      if (x >= a && x <= b) count++;
-    }
+    const count = upperBound(dots, b) - lowerBound(dots, a);
     result.push(count);
   }
 
