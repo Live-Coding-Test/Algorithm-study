@@ -11,7 +11,8 @@ def main():
     craneWeight.sort(reverse=True)
 
     if boxWeight[0] > craneWeight[0]:
-        return -1
+        print(-1)
+        return
 
     time = 0
 
