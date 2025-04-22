@@ -7,13 +7,20 @@ cranes = list(map(int, input().split()))
 m = int(input())
 boxes = list(map(int, input().split()))
 
-cranes.sort()   # 6, 8, 9
-boxes.sort()    # 2, 2, 4, 5, 7
+cranes.sort(reverse=True) 
+boxes.sort(reverse=True)  
 
-if max(cranes) < max(boxes):
+res = 0
+if cranes[0] < boxes[0]:
     print(-1)
-
-i, j = 0, 0
-while j < m:
-    if cranes[i] >= boxes[j]:
-        
+else:
+    while boxes:
+        for c in cranes:
+            if boxes and c < boxes[-1]: # 시간초과 해결하는 한 줄..
+                continue
+            for b in boxes:
+                if c >= b:
+                    boxes.remove(b)
+                    break
+        res += 1
+    print(res)
