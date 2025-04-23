@@ -12,11 +12,11 @@ for _ in range(n):
     village.append(list(map(int, input().split())))
 
 village.sort(key = lambda x: x[0])
-mid = (sum(p for _, p in village)) // 2
+total = sum(p for _, p in village)
 
 count = 0
 for position, people in village:
     count += people
-    if count >= mid:
+    if count >= total / 2:
         print(position)
         break
