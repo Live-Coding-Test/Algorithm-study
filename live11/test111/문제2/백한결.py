@@ -1,15 +1,13 @@
 import sys
 
 def main():
-
     input = sys.stdin.readline
     N = int(input())
 
-    calendar = [0 for _ in range(365)]
+    calendar = [0 for _ in range(366)]
 
     for _ in range(N):
         S, E = map(int, input().split())
-
         for date in range(S, E+1):
             calendar[date] += 1
 
@@ -21,10 +19,13 @@ def main():
         if calendar[date] != 0:
             maxHeight = max(calendar[date], maxHeight)
             count += 1
-        if calendar[date] == 0:
+        else:
             total += count * maxHeight
             count = 0
             maxHeight = 0
+
+    if count > 0:
+        total += count * maxHeight
 
     print(total)
 
