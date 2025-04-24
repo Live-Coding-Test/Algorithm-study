@@ -1,18 +1,30 @@
-"""
-우선순위 큐 사용하고 개수와 마지막 종료 날짜 곱하면 되지 않을끼....
-"""
 import sys
-import heapq
 
 input = sys.stdin.readline
 
 n = int(input())
-schedule = []
-heapq.heapify(schedule)
+years = [0] * 366
 for _ in range(n):
     s, e = map(int, input().split())
-    heapq.heappush(schedule, (e, s))
+    for i in range(s, e + 1):
+        years[i] += 1
 
-while schedule:
-    heapq.heappop(schedule)
-    if 
+# [0, 0, 1, 1, 2, 3, 2, 2, 1, 1, 0, 1, 2, ...]
+
+chunk = []
+group = []
+for i in range(1, len(years)):
+    if years[i] != 0:
+        chunk.append(years[i])
+    else:
+        if chunk:
+            group.append(chunk[:])
+            chunk.clear()
+if chunk:
+    group.append(chunk[:])
+    
+res = 0
+for g in group:
+    res += max(g) * len(g)
+
+print(res)
