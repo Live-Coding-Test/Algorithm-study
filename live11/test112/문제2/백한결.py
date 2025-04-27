@@ -1,21 +1,33 @@
 import sys
+sys.setrecursionlimit(10**7)
 
 def main():
     input = sys.stdin.readline
-    S = str(input().strip())
-    T = str(input().strip())
+    S = input().strip()
+    T = input().strip()
+    found = False
 
-    makeT(S, T)
+    def bt(cur: str):
+        nonlocal found
+        if found:
+            return
 
-def makeT(current, T):
-    if len(current) > len(T):
-        return
-    if current == T:
-        print(1)
+        if len(cur) < len(S):
+            return
 
-    makeT(current + 'A', T)
-    makeT((current + 'B')[::-1], T)
+        if len(cur) == len(S):
+            if cur == S:
+                found = True
+            return
 
+        if cur.endswith('A'):
+            bt(cur[:-1])
+
+        if cur.startswith('B'):
+            bt(cur[1:][::-1])
+
+    bt(T)
+    print(1 if found else 0)
 
 if __name__ == '__main__':
     main()
