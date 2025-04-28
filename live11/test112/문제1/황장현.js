@@ -13,7 +13,6 @@ function generateAnagrams(word) {
 
   function backtrack() {
     if (path.length === chars.length) {
-      console.log(path.join(''));
       result.push(path.join(''));
       return;
     }
@@ -39,10 +38,13 @@ function generateAnagrams(word) {
 function solution(input) {
   const N = input[0][0];
   const words = input.slice(1).map((el) => el[0]);
+  const output = [];
 
   for (let i = 0; i < N; i++) {
-    generateAnagrams(words[i]);
+    const anagrams = generateAnagrams(words[i]);
+    output.push(...anagrams);
   }
+  console.log(output.join('\n'));
 }
 
 solution(input);
