@@ -23,6 +23,14 @@ function solution(input) {
 
     numbers.sort();
 
+    let consistent = true;
+    for (let i = 0; i < N - 1; i++) {
+      if (numbers[i + 1].startsWith(numbers[i])) {
+        consistent = false;
+        break;
+      }
+    }
+
     output.push(consistent ? "YES" : "NO");
   }
 
