@@ -3,31 +3,23 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-feed = []
-feed_dict = {}
+
+layer_dict = {}
 for _ in range(n):
     data = input().split()
 
-    feed.append(data[1:])
-
-    layer = feed_dict
-    for f in feed:
-        if f not in layer:
-            layer[f] = {}
-        layer = layer[f]
-print(feed_dict)
+    layer = layer_dict
+    for feed in data[1:]:
+        if feed not in layer:
+            layer[feed] = {}
+        layer = layer[feed]
         
 
+def printer(layer_dict, layer):
+    layer_list = sorted(list(layer_dict))
+    for i in layer_list:
+        print('--' * layer, end='')
+        print(i)
+        printer(layer_dict[i], layer + 1)
 
-"""
-3
-2 B A
-4 A B C D
-2 A C
-
-4
-2 KIWI BANANA
-2 KIWI APPLE
-2 APPLE APPLE
-3 APPLE BANANA KIWI
-"""
+printer(layer_dict, 0)
