@@ -10,14 +10,18 @@ for _ in range(n):
     radius.append((x-r, x+r))
 
 radius.sort()
-flag = 'YES'
-for i in range(len(radius) - 1):
-    if radius[i][0] < radius[i+1][0]:
-        if radius[i][1] > radius[i+1][1]:   # 안에 있는 경우
-            continue
-        else:
-            flag = 'NO'
-    if radius[i][1] < radius[i+1][0]:
-        continue
 
+flag = 'YES'
+stack = []
+for start, end in radius:
+    if not stack:
+        stack.append((start, end))
+    else:
+        pre_start, pre_end = stack.pop()
+        if pre_start >= start or pre_end == start:  # 맞닿아 있을 때
+            flag = 'NO'
+            break
+        if pre_end > start and pre_end <= end:  # 겹칠 때
+            flag = 'NO'
+            break
 print(flag)
