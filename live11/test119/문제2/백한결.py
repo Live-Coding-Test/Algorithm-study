@@ -11,11 +11,13 @@ def main():
     current_sum = 0
     result = float('inf')
 
-    while end != N:
+    while True:
         if current_sum >= S:
             result = min(result, end - start)
             current_sum -= sequence[start]
             start += 1
+        elif end == N:
+            break
         else:
             current_sum += sequence[end]
             end += 1
